@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Service\Homepage;
+
+use App\DTO\HomepageDTO;
+use App\Repository\ProductRepository;
+
+class HomepageService implements HomepageServiceInterface
+{
+    public function __construct(private ProductRepository $productRepository)
+    {
+    }
+
+    public function getViewData(HomepageDTO $filterData): array
+    {
+        if (!$filterData) {
+            $products = $this->productRepository->findAll();
+        } else {
+            $products = $this->productRepository->searchWithFilters(
+                $filterData->getCategory(),
+                $filterData->getMinPrice(),
+                $filterData->getMaxPrice(),
+                $filterData->getSize()
+            );
+        }
+
+        $latest = $this->productRepository->findLatest();
+        $popular = $this->productRepository->findPopular();
+
+        return ['products' => $products, 'latest' => $latest, 'popular' => $popular];
+    }
+}

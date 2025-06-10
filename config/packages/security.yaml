@@ -1,0 +1,32 @@
+security:
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
+    password_hashers:
+        App\Entity\User:
+            algorithm: auto
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            lazy: true
+            provider: app_user_provider
+            custom_authenticator: App\Security\LoginFormAuthenticator
+            logout:
+                path: logout
+                target: homepage
+            remember_me:
+                secret: '%kernel.secret%'
+
+    access_control:
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/register, roles: PUBLIC_ACCESS }
+        - { path: ^/, roles: PUBLIC_ACCESS }
+        - { path: "^/product/{id}", roles: PUBLIC_ACCESS }
+        - { path: ^/profile, roles: PUBLIC_ACCESS }

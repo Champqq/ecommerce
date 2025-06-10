@@ -1,0 +1,25 @@
+parameters:
+    cart.session_key: '%env(CART_SESSION_KEY)%'
+    login_route: '%env(LOGIN_ROUTE)%'
+    homepage: '%env(HOMEPAGE)%'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    App\Service\Cart\Factory\Guest\GuestCartFactory:
+        arguments:
+            $cartSessionKey: '%cart.session_key%'
+
+    App\Security\LoginFormAuthenticator:
+        arguments:
+            $loginRoute: '%login_route%'
+            $homepage: '%homepage%'

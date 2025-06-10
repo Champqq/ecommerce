@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+    <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+        <div class="row w-100 justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h1 class="text-center mb-4">Login to your account</h1>
+
+                        {% if error %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ error.messageKey|trans(error.messageData, 'security') }}
+                            </div>
+                        {% endif %}
+
+                        <form method="post">
+                            <div class="mb-4">
+                                <label for="inputEmail" class="form-label">Email</label>
+                                <input type="email" name="email" id="inputEmail"
+                                       value="{{ last_username }}"
+                                       required autofocus
+                                       class="form-control">
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="inputPassword" class="form-label">Password</label>
+                                <input type="password" name="password" id="inputPassword" required
+                                       class="form-control">
+                            </div>
+
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                            <div class="d-grid mb-3">
+                                <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                            </div>
+                        </form>
+
+                        <div class="text-center mt-4">
+                            <span class="text-muted">Don't have an account?</span>
+                            <a href="{{ path('register') }}" class="text-decoration-none ms-1">Register</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

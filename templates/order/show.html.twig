@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order №{{ order.id }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-5" style="min-height: calc(100vh - 200px);">
+        <h1 class="mb-4 text-center">Order №{{ order.id }}</h1>
+
+        <div class="mb-3">
+            <strong>Date:</strong> {{ order.createdAt ? order.createdAt|date('Y-m-d H:i') : '—' }}
+        </div>
+        <div class="mb-3">
+            <strong>Status:</strong> <span class="badge bg-info text-dark">{{ order.status }}</span>
+        </div>
+        <div class="mb-3">
+            <strong>Amount:</strong> {{ order.total|number_format(2, '.', ' ') }} $
+        </div>
+
+        <h4 class="mt-4">Products:</h4>
+        <ul class="list-group mb-4">
+            {% for item in order.items %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ item.product.name }} (x{{ item.quantity }})
+                    <span>{{ item.total|number_format(2, '.', ' ') }} $</span>
+                </li>
+            {% else %}
+                <li class="list-group-item">Products not found.</li>
+            {% endfor %}
+        </ul>
+
+        <div class="text-center mt-4">
+            <form method="post" action="{{ path('order_history')}}">
+                <button type="submit" class="btn btn-outline-dark">Back to order history</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

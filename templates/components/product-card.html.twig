@@ -1,0 +1,22 @@
+<div class="col mb-5">
+    <div class="card h-100">
+        <img class="card-img-top"
+             src="{{ product.image ? asset('uploads/products/' ~ product.image) : 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg' }}"
+             alt="{{ product.name }}" />
+
+        <div class="card-body p-4">
+            <div class="text-center">
+                <h5 class="fw-bolder">{{ product.name }}</h5>
+                {{ product.price|number_format(2) }} $
+            </div>
+        </div>
+
+        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center">
+                    <form method="get" action="{{ path('product_show', {id: product.id}) }}">
+                        <button type="submit" class="btn btn-outline-dark">Details</button>
+                    </form>
+            </div>
+        </div>
+    </div>
+</div>

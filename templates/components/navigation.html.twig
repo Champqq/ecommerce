@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="{{ path('homepage') }}">{{ site_name ?? 'Home' }}</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Switch navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item dropdown">
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ path('homepage') }}">Products</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        {% for category in categories ?? [] %}
+                            <li><a class="dropdown-item" href="{{ path('category', {slug: category.slug}) }}">{{ category.name }}</a></li>
+                        {% endfor %}
+                        <li><a class="dropdown-item" href="{{ path('homepage', {filter: 'popular'}) }}">Popular</a></li>
+                        <li><a class="dropdown-item" href="{{ path('homepage', {filter: 'new'}) }}">New</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex align-items-center gap-2">
+                <a href="{{ path('profile') }}" class="btn btn-outline-dark d-flex align-items-center">
+                    <i class="bi-person me-1"></i>
+                    Profile
+                </a>
+
+                <a href="{{ path('cart') }}" class="btn btn-outline-dark d-flex align-items-center">
+                    <i class="bi-cart-fill me-1"></i>
+                    Cart
+                    <span class="badge bg-dark text-white ms-2 rounded-pill">{{ cart_items_count() }}</span>
+                </a>
+            </form>
+        </div>
+    </div>
+</nav>

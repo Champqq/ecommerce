@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order Confirmation{% endblock %}
+
+{% block body %}
+    <div class="container mt-5" style="min-height: calc(100vh - 200px);">
+        <h1 class="mb-4">Thank you for your purchase!</h1>
+        <p class="lead">Order number: <strong>#{{ order.number }}</strong></p>
+        <h2 class="mb-4">We will send details to your email.</h2>
+        <a href="{{ path('homepage') }}" class="btn btn-primary mt-4">Homepage</a>
+    </div>
+{% endblock %}

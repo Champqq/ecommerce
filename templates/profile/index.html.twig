@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+    <div class="container mt-5" style="min-height: calc(100vh - 200px);">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                {% if app.user %}
+                    <!-- User Profile Section -->
+                    <div class="text-center mb-5">
+                        <h1 class="display-5 fw-bold text-dark mb-2">Welcome back!</h1>
+                        <p class="text-muted fs-5">{{ app.user.email }}</p>
+                    </div>
+
+                    <!-- Profile Update Form -->
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-header bg-light border-0 py-3">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-edit text-primary me-2"></i>Update Profile
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <form method="post" action="{{ path('profile_update') }}">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="phone" class="form-label fw-semibold">
+                                            <i class="fas fa-phone text-muted me-2"></i>Phone Number
+                                        </label>
+                                        <input type="text" id="phone" name="phone" value="{{ app.user.phone ?? '' }}"
+                                               class="form-control form-control-lg" placeholder="Enter your phone number">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="password" class="form-label fw-semibold">
+                                            <i class="fas fa-lock text-muted me-2"></i>New Password
+                                        </label>
+                                        <input type="password" id="password" name="password"
+                                               class="form-control form-control-lg"
+                                               placeholder="Enter new password" autocomplete="new-password">
+                                    </div>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-save me-2"></i>Update Profile
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <a href="{{ path('order_history') }}" class="btn btn-outline-primary btn-lg w-100 h-100 d-flex align-items-center justify-content-center">
+                                <div class="text-center">
+                                    <i class="fas fa-history fs-3 d-block mb-2"></i>
+                                    <span class="fw-semibold">Order History</span>
+                                    <small class="d-block text-muted">View your past orders</small>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{ path('logout') }}" class="btn btn-outline-danger btn-lg w-100 h-100 d-flex align-items-center justify-content-center">
+                                <div class="text-center">
+                                    <i class="fas fa-sign-out-alt fs-3 d-block mb-2"></i>
+                                    <span class="fw-semibold">Log Out</span>
+                                    <small class="d-block text-muted">Log out of your account</small>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                {% else %}
+                    <!-- Guest Welcome Section -->
+                    <div class="text-center mb-5">
+                        <h1 class="display-4 fw-bold text-dark mb-3">Welcome!</h1>
+                        <p class="lead text-muted mb-4">Sign in to your account or create a new one to get more information</p>
+
+                        <div class="d-flex justify-content-center gap-3 mb-5">
+                            <a href="{{ path('login') }}" class="btn btn-primary btn-lg px-4">
+                                <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                            </a>
+                            <a href="{{ path('register') }}" class="btn btn-outline-primary btn-lg px-4">
+                                <i class="fas fa-user-plus me-2"></i>Create Account
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <meta name="description" content="{% block meta_description %}Description{% endblock %}" />
+    <meta name="author" content="{% block meta_author %}Author{% endblock %}" />
+
+    <title>{% block title %}Shop{% endblock %}</title>
+
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.ico') }}" />
+
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+<!-- Navigation -->
+{% include 'components/navigation.html.twig' %}
+
+<!-- Main Content -->
+<main>
+    {% block body %}{% endblock %}
+</main>
+
+<!-- Footer -->
+{% include 'components/footer.html.twig' %}
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
+<script src="{{ asset('js/scripts.js') }}"></script>
+
+{% block javascripts %}{% endblock %}
+</body>
+</html>
