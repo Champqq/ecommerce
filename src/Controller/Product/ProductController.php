@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ProductController extends AbstractController
 {
-    #[Route('/product/{id}', name: 'product_show', requirements: ['id' => '\d+'])]
+    #[Route('/product/{id}', name: 'product_show', requirements: ['id' => '\d+'], methods: 'GET')]
     public function show(int $id, ProductRepository $productRepository): Response
     {
         return $this->render(

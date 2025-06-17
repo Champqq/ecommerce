@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\DTO\HomepageDTO;
+use App\Repository\CategoryRepository;
 use App\Service\Homepage\HomepageServiceInterface;
-use App\Service\Homepage\Request\HomepageDataHandlerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,14 +16,24 @@ class HomepageController extends AbstractController
 {
     public function __construct(
         private HomepageServiceInterface $homepageService,
-        private HomepageDataHandlerInterface $homepageDataHandler,
+        private CategoryRepository $categoryRepository,
     ) {
     }
 
-    #[Route('/', name: 'homepage')]
+    #[Route('/', name: 'homepage', methods: ['GET'])]
     public function index(Request $request): Response
     {
-        $filterData = $this->homepageDataHandler->getFilterData($request);
+        $categoryName = $request->query->get('category');
+        $minPrice = (float) $request->query->get('min_price');
+        $maxPrice = (float) $request->query->get('max_price');
+        $size = $request->query->get('size');
+
+        $category = null;
+        if ($categoryName) {
+            $category = $this->categoryRepository->findCategory($categoryName);
+        }
+
+        $filterData = new HomepageDTO($category, $minPrice, $maxPrice, $size);
 
         return $this->render(
             'homepage/index.html.twig',

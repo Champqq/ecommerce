@@ -6,7 +6,7 @@ namespace App\DTO;
 
 use App\Entity\Category;
 
-class HomepageDTO
+class FilterDTO
 {
     private ?Category $category;
     private ?float $minPrice;

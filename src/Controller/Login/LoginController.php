@@ -11,8 +11,8 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
-    #[Route(path: '/login', name: 'login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    #[Route(path: '/login', name: 'login_show', methods: ['GET'])]
+    public function show(AuthenticationUtils $authenticationUtils): Response
     {
         $error = $authenticationUtils->getLastAuthenticationError();
 
@@ -24,7 +24,13 @@ class LoginController extends AbstractController
         );
     }
 
-    #[Route(path: '/logout', name: 'logout')]
+    #[Route(path: '/login', name: 'login_process', methods: ['POST'])]
+    public function process(): void
+    {
+        // This method is empty because Symfony automatically handles the login logic
+    }
+
+    #[Route(path: '/logout', name: 'logout', methods: ['GET', 'POST'])]
     public function logout(): void
     {
         // This method is empty because Symfony automatically handles the logout logic
