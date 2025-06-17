@@ -1,4 +1,4 @@
-.PHONY: check fix analyse
+.PHONY: check fix
 
 check:
 	php vendor/bin/phpstan analyse src

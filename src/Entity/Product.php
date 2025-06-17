@@ -18,10 +18,10 @@ class Product
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
@@ -37,13 +37,13 @@ class Product
     #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'product')]
     private Collection $orderItems;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $views = 0;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $image = null;
 
     public function __construct()
@@ -56,74 +56,98 @@ class Product
 
     public function getId(): ?int
     {
-        return $this->id; 
+        return $this->id;
     }
+
     public function getName(): ?string
     {
-        return $this->name; 
+        return $this->name;
     }
+
     public function setName(string $name): static
     {
-        $this->name = $name; return $this; 
+        $this->name = $name;
+        return $this;
     }
+
     public function getDescription(): ?string
     {
-        return $this->description; 
+        return $this->description;
     }
+
     public function setDescription(?string $description): static
     {
-        $this->description = $description; return $this; 
+        $this->description = $description;
+        return $this;
     }
+
     public function getPrice(): ?float
     {
-        return $this->price; 
+        return $this->price;
     }
+
     public function setPrice(float $price): static
     {
-        $this->price = $price; return $this; 
+        $this->price = $price;
+        return $this;
     }
+
     public function getCategories(): Collection
     {
-        return $this->categories; 
+        return $this->categories;
     }
+
     public function getAttributes(): Collection
     {
-        return $this->attributes; 
+        return $this->attributes;
     }
+
     public function getOrderItems(): Collection
     {
-        return $this->orderItems; 
+        return $this->orderItems;
     }
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->createdAt; 
+        return $this->createdAt;
     }
+
     public function setCreatedAt(\DateTimeInterface $createdAt): Product
     {
-        $this->createdAt = $createdAt; return $this; 
+        $this->createdAt = $createdAt;
+        return $this;
     }
+
     public function getViews(): int
     {
-        return $this->views; 
+        return $this->views;
     }
+
     public function setViews(int $views): Product
     {
-        $this->views = $views; return $this; 
+        $this->views = $views;
+        return $this;
     }
+
     public function incrementViews(): Product
     {
-        $this->views++; return $this; 
+        $this->views++;
+        return $this;
     }
+
     public function getImage(): ?string
     {
-        return $this->image; 
+        return $this->image;
     }
+
     public function setImage(?string $image): static
     {
-        $this->image = $image; return $this; 
+        $this->image = $image;
+        return $this;
     }
+
     public function getValue(): array
     {
-        return $this->attributes->getValues(); 
+        return $this->attributes->getValues();
     }
 }

@@ -44,9 +44,7 @@
         {% endif %}
 
         <div class="text-center mt-4">
-            <form method="post" action="{{ path('profile')}}">
-                <button type="submit" class="btn btn-outline-dark">Back to profile</button>
-            </form>
+            <a href="{{ path('profile') }}" class="btn btn-outline-dark">Back to profile</a>
         </div>
     </div>
 {% endblock %}

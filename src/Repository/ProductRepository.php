@@ -47,10 +47,10 @@ class ProductRepository extends ServiceEntityRepository
     }
 
     public function searchWithFilters(
-        Category $category = null,
+        ?Category $category = null,
         ?float $minPrice = null,
         ?float $maxPrice = null,
-        string $size = null
+        ?string $size = null
     ): array {
         $qb = $this->createQueryBuilder('p')
             ->leftJoin('p.attributes', 'a')

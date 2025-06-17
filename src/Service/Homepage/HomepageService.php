@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace App\Service\Homepage;
 
-use App\DTO\HomepageDTO;
+use App\DTO\FilterDTO;
 use App\Repository\ProductRepository;
 
 class HomepageService implements HomepageServiceInterface
 {
-    public function __construct(private ProductRepository $productRepository)
-    {
+    public function __construct(
+        private ProductRepository $productRepository
+    ) {
     }
 
-    public function getViewData(HomepageDTO $filterData): array
+    public function getViewData(FilterDTO $filterData): array
     {
         if (!$filterData) {
             $products = $this->productRepository->findAll();

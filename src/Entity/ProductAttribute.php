@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\ProductAttributeRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductAttributeRepository::class)]
@@ -19,38 +20,47 @@ class ProductAttribute
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $name = null;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: Types::STRING)]
     private ?string $value = null;
 
     public function getId(): ?int
     {
-        return $this->id; 
+        return $this->id;
     }
+
     public function getProduct(): ?Product
     {
-        return $this->product; 
+        return $this->product;
     }
+
     public function setProduct(?Product $product): static
     {
-        $this->product = $product; return $this; 
+        $this->product = $product;
+        return $this;
     }
+
     public function getName(): ?string
     {
-        return $this->name; 
+        return $this->name;
     }
+
     public function setName(string $name): static
     {
-        $this->name = $name; return $this; 
+        $this->name = $name;
+        return $this;
     }
+
     public function getValue(): ?string
     {
-        return $this->value; 
+        return $this->value;
     }
+
     public function setValue(string $value): static
     {
-        $this->value = $value; return $this; 
+        $this->value = $value;
+        return $this;
     }
 }

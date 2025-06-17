@@ -7,6 +7,7 @@ namespace App\Entity;
 use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Random\RandomException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -23,26 +24,26 @@ class Order
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 20, unique: true)]
+    #[ORM\Column(type: Types::STRING, length: 20, unique: true)]
     private ?string $number = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private string $status = self::STATUS_CART;
 
-    #[ORM\Column(type: 'float')]
+    #[ORM\Column(type: Types::DECIMAL)]
     private float $total = 0;
 
     #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'order', cascade: ['persist', 'remove'])]
     private Collection $items;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $customerEmail = null;
 
     /**
@@ -64,46 +65,57 @@ class Order
     {
         return $this->id;
     }
+
     public function getNumber(): ?string
     {
         return $this->number;
     }
+
     public function getUser(): ?User
     {
         return $this->user;
     }
+
     public function setUser(?UserInterface $user): static
     {
         $this->user = $user; return $this;
     }
+
     public function getStatus(): string
     {
         return $this->status;
     }
+
     public function setStatus(string $status): static
     {
         $this->status = $status; return $this;
     }
+
     public function isCart(): bool
     {
         return $this->status === self::STATUS_CART;
     }
+
     public function isNew(): bool
     {
         return $this->status === self::STATUS_NEW;
     }
+
     public function getTotal(): float
     {
         return $this->total;
     }
+
     public function setTotal(float $total): float
     {
         $this->total = $total; return $this->total;
     }
+
     public function getItems(): Collection
     {
         return $this->items;
     }
+
     public function addItem(OrderItem $item): void
     {
         if (!$this->items->contains($item)) {
@@ -111,14 +123,17 @@ class Order
             $item->setOrder($this);
         }
     }
+
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
+
     public function getCustomerEmail(): ?string
     {
         return $this->customerEmail;
     }
+
     public function setCustomerEmail(?string $customerEmail): static
     {
         $this->customerEmail = $customerEmail;

@@ -4,9 +4,9 @@ declare(strict_types = 1);
 
 namespace App\Service\Homepage;
 
-use App\DTO\HomepageDTO;
+use App\DTO\FilterDTO;
 
 interface HomepageServiceInterface
 {
-    public function getViewData(HomepageDTO $filterData): array;
+    public function getViewData(FilterDTO $filterData): array;
 }

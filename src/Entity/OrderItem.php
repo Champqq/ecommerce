@@ -24,10 +24,10 @@ class OrderItem
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $quantity = 1;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::STRING)]
     private string $size;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
@@ -38,54 +38,72 @@ class OrderItem
 
     public function getId(): ?int
     {
-        return $this->id; 
+        return $this->id;
     }
+
     public function getOrder(): ?Order
     {
-        return $this->order; 
+        return $this->order;
     }
+
     public function setOrder(?Order $order): static
     {
-        $this->order = $order; return $this; 
+        $this->order = $order;
+        return $this;
     }
+
     public function getProduct(): ?Product
     {
-        return $this->product; 
+        return $this->product;
     }
+
     public function setProduct(?Product $product): static
     {
-        $this->product = $product; return $this; 
+        $this->product = $product;
+        return $this;
     }
+
     public function getQuantity(): int
     {
-        return $this->quantity; 
+        return $this->quantity;
     }
+
     public function setQuantity(int $quantity): static
     {
-        $this->quantity = $quantity; return $this; 
+        $this->quantity = $quantity;
+        return $this;
     }
+
     public function getUnitPrice(): ?float
     {
-        return $this->unitPrice; 
+        return $this->unitPrice;
     }
+
     public function setUnitPrice(float $unitPrice): static
     {
-        $this->unitPrice = $unitPrice; return $this; 
+        $this->unitPrice = $unitPrice;
+        return $this;
     }
+
     public function getTotal(): ?float
     {
-        return $this->total; 
+        return $this->total;
     }
+
     public function setTotal(float $total): static
     {
-        $this->total = $total; return $this; 
+        $this->total = $total;
+        return $this;
     }
+
     public function setSize(string $size): static
     {
-        $this->size = $size; return $this; 
+        $this->size = $size;
+        return $this;
     }
+
     public function getSize(): string
     {
-        return $this->size; 
+        return $this->size;
     }
 }
