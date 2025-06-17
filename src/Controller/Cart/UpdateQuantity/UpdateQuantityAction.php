@@ -24,4 +24,3 @@ class UpdateQuantityAction extends AbstractController
         $this->cartService->updateQuantity($productId, $quantity);
     }
 }
-

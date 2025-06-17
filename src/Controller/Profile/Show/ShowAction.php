@@ -15,8 +15,9 @@ class ShowAction extends AbstractController
     public function __invoke(Order $order): Response
     {
         return $this->render(
-            'order/show.html.twig',
-            ['order' => $order]
+            'order/show.html.twig', [
+                'order' => $order
+            ]
         );
     }
 }

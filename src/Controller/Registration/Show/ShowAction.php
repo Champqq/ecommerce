@@ -17,8 +17,10 @@ class ShowAction extends AbstractController
     {
         $form = $this->createForm(RegistrationForm::class, new User());
 
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form,
-        ]);
+        return $this->render(
+            'registration/register.html.twig', [
+                'registrationForm' => $form
+            ]
+        );
     }
 }

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Homepage;
 
-use App\DTO\HomepageDTO;
+use App\DTO\FilterDTO;
 use App\Repository\CategoryRepository;
 use App\Service\Homepage\HomepageServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,7 +33,7 @@ class HomepageController extends AbstractController
             $category = $this->categoryRepository->findCategory($categoryName);
         }
 
-        $filterData = new HomepageDTO($category, $minPrice, $maxPrice, $size);
+        $filterData = new FilterDTO($category, $minPrice, $maxPrice, $size);
 
         return $this->render(
             'homepage/index.html.twig',

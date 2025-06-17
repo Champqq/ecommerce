@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Product;
 
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +16,7 @@ class ProductController extends AbstractController
     {
         return $this->render(
             'product/show.html.twig', [
-            'product' => $productRepository->find($id),
+            'product' => $productRepository->find($id)
             ]
         );
     }

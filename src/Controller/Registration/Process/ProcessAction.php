@@ -32,8 +32,10 @@ class ProcessAction extends AbstractController
             return $this->redirectToRoute('login_show');
         }
 
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form,
-        ]);
+        return $this->render(
+            'registration/register.html.twig', [
+                'registrationForm' => $form
+            ]
+        );
     }
 }

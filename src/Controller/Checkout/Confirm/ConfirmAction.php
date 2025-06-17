@@ -15,8 +15,9 @@ class ConfirmAction extends AbstractController
     public function confirmation(Order $order): Response
     {
         return $this->render(
-            'checkout/confirmation.html.twig',
-            ['order' => $order]
+            'checkout/confirmation.html.twig', [
+                'order' => $order
+            ]
         );
     }
 }

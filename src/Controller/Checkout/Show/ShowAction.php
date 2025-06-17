@@ -20,8 +20,9 @@ class ShowAction extends AbstractController
     public function __invoke(): Response
     {
         return $this->render(
-            'checkout/index.html.twig',
-            ['order' => $this->cartContext->getCart()]
+            'checkout/index.html.twig', [
+                'order' => $this->cartContext->getCart()
+            ]
         );
     }
 }

@@ -29,8 +29,10 @@ class ProcessAction extends AbstractController
 
         $order = $this->checkoutService->process($email);
 
-        return $this->redirectToRoute('checkout_confirmation', [
-            'id' => $order->getId(),
-        ]);
+        return $this->redirectToRoute(
+            'checkout_confirmation', [
+                'id' => $order->getId()
+            ]
+        );
     }
 }
