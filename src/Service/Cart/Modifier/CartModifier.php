@@ -7,8 +7,6 @@ namespace App\Service\Cart\Modifier;
 use App\Entity\Order;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
-use App\Service\Cart\Modifier\OrderItem\QuantityModifierInterface;
-use App\Service\Cart\Modifier\OrderItem\QuantitySetterInterface;
 use App\Service\Entity\EntityServiceInterface;
 use App\Service\Order\OrderServiceInterface;
 
@@ -19,8 +17,6 @@ class CartModifier implements CartModifierInterface
         private ProductRepository $productRepository,
         private EntityServiceInterface $entityService,
         private OrderServiceInterface $orderService,
-        private QuantityModifierInterface $quantityModifier,
-        private QuantitySetterInterface $quantitySetter,
     ) {
     }
 
@@ -29,8 +25,7 @@ class CartModifier implements CartModifierInterface
         foreach ($cart->getItems() as $item) {
             if ($item->getProduct()->getId() === $productId) {
                 $item->setSize($size);
-
-                ($this->quantityModifier)($item, $quantity);
+                $item->increaseQuantity($quantity);
 
                 $this->entityService->save($item);
 
@@ -69,7 +64,7 @@ class CartModifier implements CartModifierInterface
     {
         foreach ($cart->getItems() as $item) {
             if ($item->getProduct()->getId() === $productId) {
-                ($this->quantitySetter)($item, $quantity);
+                $item->updateQuantity($quantity);
             }
         }
     }

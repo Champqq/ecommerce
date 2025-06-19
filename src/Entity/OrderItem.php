@@ -106,4 +106,20 @@ class OrderItem
     {
         return $this->size;
     }
+
+    public function updateQuantity(int $newQuantity): void
+    {
+        $this->quantity = $newQuantity;
+        $this->recalculateTotal();
+    }
+
+    public function increaseQuantity(int $additive): void
+    {
+        $this->updateQuantity($this->quantity + $additive);
+    }
+
+    private function recalculateTotal(): void
+    {
+        $this->total = $this->quantity * $this->unitPrice;
+    }
 }
