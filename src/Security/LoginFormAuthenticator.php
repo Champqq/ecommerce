@@ -26,6 +26,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         private UrlGeneratorInterface $urlGenerator,
         private string $loginRoute,
         private string $homepage,
+        private string $adminPanel,
     ) {
     }
 
@@ -47,8 +48,14 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        $user = $token->getUser();
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
+        }
+
+        if ($user->isAdmin()) {
+            return new RedirectResponse($this->urlGenerator->generate($this->adminPanel));
         }
 
         return new RedirectResponse($this->urlGenerator->generate($this->homepage));

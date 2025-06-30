@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -21,7 +23,7 @@ class Product
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
@@ -38,7 +40,7 @@ class Product
     private Collection $orderItems;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    private ?\DateTimeInterface $createdAt = null;
+    private ?DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: Types::INTEGER)]
     private int $views = 0;
@@ -51,7 +53,7 @@ class Product
         $this->categories = new ArrayCollection();
         $this->attributes = new ArrayCollection();
         $this->orderItems = new ArrayCollection();
-        $this->createdAt = new \DateTimeImmutable();
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -107,12 +109,12 @@ class Product
         return $this->orderItems;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): Product
+    public function setCreatedAt(DateTimeInterface $createdAt): Product
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -149,5 +151,31 @@ class Product
     public function getValue(): array
     {
         return $this->attributes->getValues();
+    }
+
+    public function setAttributes(Collection $attributes): static
+    {
+        $this->attributes = new ArrayCollection();
+
+        foreach ($attributes as $attribute) {
+            $this->addAttribute($attribute);
+        }
+
+        return $this;
+    }
+
+    public function addAttribute(ProductAttribute $attribute): void
+    {
+        if (!$this->attributes->contains($attribute)) {
+            $this->attributes[] = $attribute;
+            $attribute->setProduct($this);
+        }
+    }
+
+    public function removeAttribute(ProductAttribute $attribute): void
+    {
+        if ($this->attributes->removeElement($attribute) && $attribute->getProduct() === $this) {
+            $attribute->setProduct(null);
+        }
     }
 }

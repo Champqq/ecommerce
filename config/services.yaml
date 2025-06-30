@@ -2,6 +2,7 @@ parameters:
     cart.session_key: '%env(CART_SESSION_KEY)%'
     login_route: '%env(LOGIN_ROUTE)%'
     homepage: '%env(HOMEPAGE)%'
+    admin_panel: '%env(ADMIN_PANEL)%'
 
 services:
     _defaults:
@@ -23,3 +24,4 @@ services:
         arguments:
             $loginRoute: '%login_route%'
             $homepage: '%homepage%'
+            $adminPanel: '%admin_panel%'

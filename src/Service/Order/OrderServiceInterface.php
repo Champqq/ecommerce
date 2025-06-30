@@ -12,4 +12,8 @@ interface OrderServiceInterface
     public function addItem(Order $order, OrderItem $item): void;
 
     public function calculateTotal(Order $order): void;
+
+    public function decreaseStock(Order $order): void;
+
+    public function applyStockAndTotal(Order $order): void;
 }

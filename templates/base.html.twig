@@ -22,7 +22,7 @@
 </head>
 <body>
 <!-- Navigation -->
-{% include 'components/navigation.html.twig' %}
+{% include 'components/navigation.html.twig' with { user: app.user } %}
 
 <!-- Main Content -->
 <main>

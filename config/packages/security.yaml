@@ -30,3 +30,4 @@ security:
         - { path: ^/, roles: PUBLIC_ACCESS }
         - { path: "^/product/{id}", roles: PUBLIC_ACCESS }
         - { path: ^/profile, roles: PUBLIC_ACCESS }
+        - { path: ^/admin, roles: ROLE_ADMIN }

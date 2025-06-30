@@ -26,7 +26,7 @@ class User implements UserInterface
     private ?string $email = null;
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
-    private array $roles = ['ROLE_USER', 'ROLE_VISITOR'];
+    private array $roles = ['ROLE_USER'];
 
     #[ORM\Column(type: Types::STRING)]
     private ?string $password = null;
@@ -94,6 +94,11 @@ class User implements UserInterface
     {
         $this->password = $password;
         return $this;
+    }
+
+    public function isAdmin(): bool
+    {
+        return in_array('ROLE_ADMIN', $this->roles, true);
     }
 
     public function eraseCredentials(): void

@@ -122,4 +122,14 @@ class OrderItem
     {
         $this->total = $this->quantity * $this->unitPrice;
     }
+
+    public function __toString(): string
+    {
+        return $this->getProduct()->getName() . ' (' . $this->getSize() . ') x' . $this->getQuantity();
+    }
+
+    public function decreaseStock(): void
+    {
+        $this->getProduct()->getAttributes()->first()->decreaseStock($this->quantity);
+    }
 }

@@ -24,4 +24,17 @@ class OrderService implements OrderServiceInterface
         }
         $order->setTotal($total);
     }
+
+    public function decreaseStock(Order $order): void
+    {
+        foreach ($order->getItems() as $item) {
+            $item->decreaseStock();
+        }
+    }
+
+    public function applyStockAndTotal(Order $order): void
+    {
+        $this->calculateTotal($order);
+        $this->decreaseStock($order);
+    }
 }

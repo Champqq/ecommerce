@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\ProductAttributeRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,6 +23,15 @@ class ProductAttribute
 
     #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $name = null;
+
+    public function __toString(): string
+    {
+        return $this->name .' - '. $this->value . ' (Stock: ' . $this->stock . ')';
+    }
+
+    #[ORM\Column(type: Types::INTEGER)]
+    #[Assert\PositiveOrZero]
+    private ?int $stock = null;
 
     #[ORM\Column(type: Types::STRING)]
     private ?string $value = null;
@@ -62,5 +72,21 @@ class ProductAttribute
     {
         $this->value = $value;
         return $this;
+    }
+
+    public function getStock(): ?int
+    {
+        return $this->stock;
+    }
+
+    public function setStock(int $stock): static
+    {
+        $this->stock = $stock;
+        return $this;
+    }
+
+    public function decreaseStock(int $quantity): void
+    {
+        $this->stock -= $quantity;
     }
 }

@@ -20,7 +20,7 @@ class OrderModifier implements OrderModifierInterface
     {
         $order->setStatus('new');
         $order->setCustomerEmail($email);
-        $this->orderService->calculateTotal($order);
+        $this->orderService->applyStockAndTotal($order);
 
         $this->entityService->save($order);
     }

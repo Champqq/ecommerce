@@ -21,6 +21,11 @@ class Category
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $name = null;
 
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
     #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'categories')]
     private Collection $products;
 

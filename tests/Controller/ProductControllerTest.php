@@ -1,16 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Service\Product\ProductServiceInterface;
 
-final class ProductControllerTest extends WebTestCase
+final class ProductControllerTest extends AbstractTestCase
 {
-    public function testIndex(): void
+    public function testShow(): void
     {
         $client = ProductControllerTest::createClient();
-        $client->request('GET', '/product');
 
-        self::assertResponseIsSuccessful();
+        $productService = $this->createMock(ProductServiceInterface::class);
+        $productService->expects($this->once())->method('incrementViews');
+
+        ProductControllerTest::getContainer()->set(ProductServiceInterface::class, $productService);
+
+        $product = $this->setupProduct();
+
+        $client->request('GET', '/product/' . $product->getId());
+
+        $this->assertResponseIsSuccessful();
     }
 }

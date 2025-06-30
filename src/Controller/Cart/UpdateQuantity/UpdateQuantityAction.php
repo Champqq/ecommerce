@@ -7,6 +7,7 @@ namespace App\Controller\Cart\UpdateQuantity;
 use App\Service\Cart\CartServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class UpdateQuantityAction extends AbstractController
@@ -17,10 +18,12 @@ class UpdateQuantityAction extends AbstractController
     }
 
     #[Route('/cart/update/{productId}', name: 'cart_update_quantity', methods: ['POST'])]
-    public function __invoke(int $productId, Request $request): void
+    public function __invoke(int $productId, Request $request): Response
     {
         $quantity = (int) $request->get('quantity');
 
         $this->cartService->updateQuantity($productId, $quantity);
+
+        return new Response('', Response::HTTP_NO_CONTENT);
     }
 }
