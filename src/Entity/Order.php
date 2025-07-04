@@ -34,8 +34,8 @@ class Order
     #[ORM\Column(type: Types::STRING, length: 50)]
     private string $status = self::STATUS_CART;
 
-    #[ORM\Column(type: Types::DECIMAL)]
-    private float $total = 0;
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    private float $total = 0.00;
 
     #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'order', cascade: ['persist', 'remove'])]
     private Collection $items;
@@ -106,9 +106,10 @@ class Order
         return $this->total;
     }
 
-    public function setTotal(float $total): float
+    public function setTotal(float $total): static
     {
-        $this->total = $total; return $this->total;
+        $this->total = round($total, 2);
+        return $this;
     }
 
     public function getItems(): Collection

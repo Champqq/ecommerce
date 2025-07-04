@@ -20,13 +20,11 @@ class ProductController extends AbstractController
     #[Route('/product/{id}', name: 'product_show', requirements: ['id' => '\d+'], methods: 'GET')]
     public function show(int $id, ProductRepository $productRepository): Response
     {
-        $product = $productRepository->find($id);
-
-        $this->productService->incrementViews($product);
+        $this->productService->incrementViews($id);
 
         return $this->render(
             'product/show.html.twig', [
-            'product' => $product
+            'product' => $productRepository->find($id)
             ]
         );
     }

@@ -109,12 +109,12 @@ class Product
         return $this->orderItems;
     }
 
-    public function getCreatedAt(): ?DateTimeInterface
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeInterface $createdAt): Product
+    public function setCreatedAt(DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -125,15 +125,15 @@ class Product
         return $this->views;
     }
 
-    public function setViews(int $views): Product
+    public function setViews(int $views): static
     {
         $this->views = $views;
         return $this;
     }
 
-    public function incrementViews(): Product
+    public function updateViews(int $newViews): static
     {
-        $this->views++;
+        $this->views += $newViews;
         return $this;
     }
 

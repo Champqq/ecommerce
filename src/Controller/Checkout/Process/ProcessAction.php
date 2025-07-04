@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Checkout\Process;
 
 use App\Service\Checkout\CheckoutServiceInterface;
+use LogicException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +28,12 @@ class ProcessAction extends AbstractController
             $email = $request->request->get('email');
         }
 
-        $order = $this->checkoutService->process($email);
+        try {
+            $order = $this->checkoutService->process($email);
+        } catch (LogicException $e) {
+            $this->addFlash('danger', $e->getMessage());
+            return $this->redirectToRoute('cart');
+        }
 
         return $this->redirectToRoute(
             'checkout_confirmation', [

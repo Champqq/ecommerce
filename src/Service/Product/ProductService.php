@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace App\Service\Product;
 
-use App\Entity\Product;
-use App\Service\Entity\EntityServiceInterface;
+use Redis;
 
 class ProductService implements ProductServiceInterface
 {
     public function __construct(
-        private EntityServiceInterface $entityService,
+        private Redis $redis,
+        private string $keyPrefix,
     ) {
     }
 
-    public function incrementViews(Product $product): void
+    /**
+     * @throws \RedisException
+     */
+    public function incrementViews(int $productId): void
     {
-        $product->incrementViews();
-        $this->entityService->save($product);
+        $this->redis->incr($this->keyPrefix . $productId);
     }
 }

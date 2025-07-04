@@ -7,7 +7,7 @@ namespace DoctrineMigrations;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
-final class Version20250626194223 extends AbstractMigration
+final class Version20250702140834 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -18,7 +18,46 @@ final class Version20250626194223 extends AbstractMigration
     {
         $this->addSql(
             <<<'SQL'
-            ALTER TABLE `order` CHANGE total total NUMERIC(10, 0) NOT NULL
+            CREATE TABLE size (id INT AUTO_INCREMENT NOT NULL, value VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
+        SQL
+        );
+        $this->addSql(
+            <<<'SQL'
+            ALTER TABLE `order` ADD customer_email VARCHAR(255) DEFAULT NULL, CHANGE total total NUMERIC(10, 2) NOT NULL
+        SQL
+        );
+        $this->addSql(
+            <<<'SQL'
+            ALTER TABLE order_item CHANGE size size VARCHAR(10) NOT NULL
+        SQL
+        );
+        $this->addSql(
+            <<<'SQL'
+            ALTER TABLE product CHANGE description description LONGTEXT DEFAULT NULL
+        SQL
+        );
+        $this->addSql(
+            <<<'SQL'
+            ALTER TABLE product_attribute CHANGE stock stock INT NOT NULL
+        SQL
+        );
+    }
+
+    public function down(Schema $schema): void
+    {
+        $this->addSql(
+            <<<'SQL'
+            DROP TABLE size
+        SQL
+        );
+        $this->addSql(
+            <<<'SQL'
+            ALTER TABLE product_attribute CHANGE stock stock INT DEFAULT 0 NOT NULL
+        SQL
+        );
+        $this->addSql(
+            <<<'SQL'
+            ALTER TABLE product CHANGE description description TEXT DEFAULT NULL
         SQL
         );
         $this->addSql(
@@ -28,46 +67,7 @@ final class Version20250626194223 extends AbstractMigration
         );
         $this->addSql(
             <<<'SQL'
-            ALTER TABLE product CHANGE description description VARCHAR(255) DEFAULT NULL, CHANGE created_at created_at DATETIME NOT NULL COMMENT '(DC2Type:datetime_immutable)'
-        SQL
-        );
-        $this->addSql(
-            <<<'SQL'
-            ALTER TABLE product_attribute ADD stock INT NOT NULL DEFAULT 0, CHANGE value value VARCHAR(10) NOT NULL
-        SQL
-        );
-        $this->addSql(
-            <<<'SQL'
-            ALTER TABLE user CHANGE roles roles JSON NOT NULL
-        SQL
-        );
-    }
-
-    public function down(Schema $schema): void
-    {
-        $this->addSql(
-            <<<'SQL'
-            ALTER TABLE product CHANGE description description LONGTEXT DEFAULT NULL, CHANGE created_at created_at DATETIME NOT NULL
-        SQL
-        );
-        $this->addSql(
-            <<<'SQL'
-            ALTER TABLE order_item CHANGE size size VARCHAR(255) DEFAULT NULL
-        SQL
-        );
-        $this->addSql(
-            <<<'SQL'
-            ALTER TABLE product_attribute DROP stock, CHANGE value value LONGTEXT NOT NULL
-        SQL
-        );
-        $this->addSql(
-            <<<'SQL'
-            ALTER TABLE `order` CHANGE total total DOUBLE PRECISION NOT NULL
-        SQL
-        );
-        $this->addSql(
-            <<<'SQL'
-            ALTER TABLE `user` CHANGE roles roles JSON NOT NULL
+            ALTER TABLE `order` DROP customer_email, CHANGE total total NUMERIC(10, 0) NOT NULL
         SQL
         );
     }

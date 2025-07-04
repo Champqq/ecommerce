@@ -27,14 +27,14 @@ class OrderItem
     #[ORM\Column(type: Types::INTEGER)]
     private int $quantity = 1;
 
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\Column(type: Types::STRING, length: 10)]
     private string $size;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?float $unitPrice = null;
+    private ?float $unitPrice = 0.00;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?float $total = null;
+    private ?float $total = 0.00;
 
     public function getId(): ?int
     {
@@ -81,7 +81,8 @@ class OrderItem
 
     public function setUnitPrice(float $unitPrice): static
     {
-        $this->unitPrice = $unitPrice;
+        $this->unitPrice = round($unitPrice, 2);
+        $this->recalculateTotal();
         return $this;
     }
 
@@ -92,7 +93,7 @@ class OrderItem
 
     public function setTotal(float $total): static
     {
-        $this->total = $total;
+        $this->total = round($total, 2);
         return $this;
     }
 
@@ -120,7 +121,7 @@ class OrderItem
 
     private function recalculateTotal(): void
     {
-        $this->total = $this->quantity * $this->unitPrice;
+        $this->total = round($this->quantity * $this->unitPrice, 2);
     }
 
     public function __toString(): string
@@ -130,6 +131,13 @@ class OrderItem
 
     public function decreaseStock(): void
     {
-        $this->getProduct()->getAttributes()->first()->decreaseStock($this->quantity);
+        $size = $this->getSize();
+
+        foreach ($this->getProduct()->getAttributes() as $attribute) {
+            if ($attribute->getValue() === $size) {
+                $attribute->decreaseStock($this->quantity);
+                break;
+            }
+        }
     }
 }

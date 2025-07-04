@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\ProductAttributeRepository;
+use LogicException;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -33,7 +34,7 @@ class ProductAttribute
     #[Assert\PositiveOrZero]
     private ?int $stock = null;
 
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\Column(type: Types::STRING, length: 10)]
     private ?string $value = null;
 
     public function getId(): ?int
@@ -87,6 +88,10 @@ class ProductAttribute
 
     public function decreaseStock(int $quantity): void
     {
+        if ($this->stock < $quantity) {
+            throw new LogicException('Please change quantity, only ' . $this->stock . ' items available.');
+        }
+
         $this->stock -= $quantity;
     }
 }

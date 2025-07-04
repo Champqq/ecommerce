@@ -20,7 +20,7 @@ class OrderService implements OrderServiceInterface
     {
         $total = 0.0;
         foreach ($order->getItems() as $item) {
-            $total += $item->getTotal() ?? 0;
+            $total += $item->getTotal();
         }
         $order->setTotal($total);
     }

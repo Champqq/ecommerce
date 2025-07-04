@@ -25,7 +25,7 @@ class User implements UserInterface
     #[ORM\Column(type: Types::STRING, length: 180, unique: true)]
     private ?string $email = null;
 
-    #[ORM\Column(type: Types::JSON, nullable: true)]
+    #[ORM\Column(type: Types::JSON, nullable: false)]
     private array $roles = ['ROLE_USER'];
 
     #[ORM\Column(type: Types::STRING)]

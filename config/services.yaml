@@ -25,3 +25,19 @@ services:
             $loginRoute: '%login_route%'
             $homepage: '%homepage%'
             $adminPanel: '%admin_panel%'
+
+    Redis:
+        class: Redis
+        calls:
+            - method: connect
+              arguments:
+                  - '%env(REDIS_HOST)%'
+                  - '%env(int:REDIS_PORT)%'
+
+    App\Command\UpdateViewsCommand:
+        arguments:
+            $keyPrefix: '%env(REDIS_PRODUCT_VIEWS_KEY_PREFIX)%'
+
+    App\Service\Product\ProductService:
+        arguments:
+            $keyPrefix: '%env(REDIS_PRODUCT_VIEWS_KEY_PREFIX)%'

@@ -38,6 +38,7 @@ class ProductCrudController extends AbstractCrudController
             TextField::new('name'),
             TextField::new('description')->hideOnIndex(),
             IntegerField::new('price'),
+            IntegerField::new('views')->onlyOnDetail(),
             AssociationField::new('categories')->onlyOnForms(),
             ArrayField::new('categories')
                 ->formatValue(
