@@ -1,0 +1,6 @@
+{% for item in field.value %}
+    {% if item.product %}
+        {{ item.product.name }} ({{ item.size }}) x{{ item.quantity }}
+        {% if not loop.last %}, {% endif %}
+    {% endif %}
+{% endfor %}

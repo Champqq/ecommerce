@@ -18,9 +18,9 @@ class OrderService implements OrderServiceInterface
 
     public function calculateTotal(Order $order): void
     {
-        $total = 0.0;
+        $total = '0.00';
         foreach ($order->getItems() as $item) {
-            $total += $item->getTotal();
+            $total = bcadd($total, $item->getTotal(), 2);
         }
         $order->setTotal($total);
     }

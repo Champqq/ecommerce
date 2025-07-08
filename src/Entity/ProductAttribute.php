@@ -25,11 +25,6 @@ class ProductAttribute
     #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $name = null;
 
-    public function __toString(): string
-    {
-        return $this->name .' - '. $this->value . ' (Stock: ' . $this->stock . ')';
-    }
-
     #[ORM\Column(type: Types::INTEGER)]
     #[Assert\PositiveOrZero]
     private ?int $stock = null;

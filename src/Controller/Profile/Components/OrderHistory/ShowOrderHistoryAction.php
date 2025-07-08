@@ -16,7 +16,7 @@ class ShowOrderHistoryAction extends AbstractController
         $user = $this->getUser();
 
         return $this->render(
-            'profile/order_history.html.twig', [
+            'profile/order-history.html.twig', [
                 'orders' => $user->getOrders()
             ]
         );

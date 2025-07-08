@@ -35,7 +35,7 @@ class Order
     private string $status = self::STATUS_CART;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private float $total = 0.00;
+    private string $total = '0';
 
     #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'order', cascade: ['persist', 'remove'])]
     private Collection $items;
@@ -101,14 +101,14 @@ class Order
         return $this->status === self::STATUS_NEW;
     }
 
-    public function getTotal(): float
+    public function getTotal(): string
     {
         return $this->total;
     }
 
-    public function setTotal(float $total): static
+    public function setTotal(string $total): static
     {
-        $this->total = round($total, 2);
+        $this->total = $total;
         return $this;
     }
 

@@ -37,17 +37,7 @@ class OrderCrudController extends AbstractCrudController
             TextField::new('customer_email')->hideWhenUpdating(),
             TextField::new('status'),
             ArrayField::new('items')
-                ->formatValue(
-                    function ($value, $entity) {
-                        return implode(
-                            ', ', $entity->getItems()->map(
-                                function ($item) {
-                                    return $item->getProduct()->getName() . ' (' . $item->getSize() . ') x' . $item->getQuantity();
-                                }
-                            )->toArray()
-                        );
-                    }
-                )
+                ->setTemplatePath('admin/field/order-items.html.twig')
                 ->onlyOnDetail()
         ];
     }

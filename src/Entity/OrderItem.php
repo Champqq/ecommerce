@@ -31,10 +31,10 @@ class OrderItem
     private string $size;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?float $unitPrice = 0.00;
+    private ?string $unitPrice = '0';
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?float $total = 0.00;
+    private ?string $total = '0';
 
     public function getId(): ?int
     {
@@ -74,26 +74,26 @@ class OrderItem
         return $this;
     }
 
-    public function getUnitPrice(): ?float
+    public function getUnitPrice(): ?string
     {
         return $this->unitPrice;
     }
 
-    public function setUnitPrice(float $unitPrice): static
+    public function setUnitPrice(string $unitPrice): static
     {
-        $this->unitPrice = round($unitPrice, 2);
+        $this->unitPrice = $unitPrice;
         $this->recalculateTotal();
         return $this;
     }
 
-    public function getTotal(): ?float
+    public function getTotal(): ?string
     {
         return $this->total;
     }
 
-    public function setTotal(float $total): static
+    public function setTotal(string $total): static
     {
-        $this->total = round($total, 2);
+        $this->total = $total;
         return $this;
     }
 
@@ -121,12 +121,7 @@ class OrderItem
 
     private function recalculateTotal(): void
     {
-        $this->total = round($this->quantity * $this->unitPrice, 2);
-    }
-
-    public function __toString(): string
-    {
-        return $this->getProduct()->getName() . ' (' . $this->getSize() . ') x' . $this->getQuantity();
+        $this->total = bcmul($this->unitPrice, (string)$this->quantity, 2);
     }
 
     public function decreaseStock(): void

@@ -1,0 +1,6 @@
+{% for attribute in field.value %}
+    {% if attribute %}
+        Size - {{ attribute.value }} (Stock: {{ attribute.stock }})
+        {% if not loop.last %}, {% endif %}
+    {% endif %}
+{% endfor %}

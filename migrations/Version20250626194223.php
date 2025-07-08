@@ -33,7 +33,22 @@ final class Version20250626194223 extends AbstractMigration
         );
         $this->addSql(
             <<<'SQL'
+            UPDATE product_attribute SET value = LEFT(value, 10) WHERE CHAR_LENGTH(value) > 10
+        SQL
+        );
+        $this->addSql(
+            <<<'SQL'
+            UPDATE product_attribute SET value = '' WHERE value IS NULL
+        SQL
+        );
+        $this->addSql(
+            <<<'SQL'
             ALTER TABLE product_attribute ADD stock INT NOT NULL DEFAULT 0, CHANGE value value VARCHAR(10) NOT NULL
+        SQL
+        );
+        $this->addSql(
+            <<<'SQL'
+            UPDATE user SET roles = '["ROLE_USER"]' WHERE roles IS NULL
         SQL
         );
         $this->addSql(

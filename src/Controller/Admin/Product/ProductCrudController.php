@@ -62,17 +62,7 @@ class ProductCrudController extends AbstractCrudController
                 ->onlyOnForms(),
 
             ArrayField::new('attributes')
-                ->formatValue(
-                    function ($value, $entity) {
-                        return implode(
-                            ', ', $entity->getAttributes()->map(
-                                function ($attr) {
-                                    return $attr->getValue() . ' (Stock: ' . $attr->getStock() . ')';
-                                }
-                            )->toArray()
-                        );
-                    }
-                )
+                ->setTemplatePath('admin/field/attributes.html.twig')
                 ->onlyOnDetail(),
 
             ImageField::new('image')

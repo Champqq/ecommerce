@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     zip \
     && rm -rf /var/lib/apt/lists/* \
-    && docker-php-ext-install intl pdo pdo_mysql zip \
+    && docker-php-ext-install intl pdo pdo_mysql zip bcmath \
     && pecl install redis \
     && docker-php-ext-enable redis
 
