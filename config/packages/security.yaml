@@ -14,6 +14,23 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        api_login:
+            pattern: ^/api/auth
+            stateless: true
+            provider: app_user_provider
+            json_login:
+                check_path: /api/auth/login_check
+                username_path: email
+                password_path: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        api:
+            pattern: ^/api
+            stateless: true
+            provider: app_user_provider
+            jwt: ~
+
         main:
             lazy: true
             provider: app_user_provider
@@ -25,6 +42,10 @@ security:
                 secret: '%kernel.secret%'
 
     access_control:
+        - { path: ^/api/auth, roles: PUBLIC_ACCESS }
+        - { path: ^/api/docs, roles: PUBLIC_ACCESS }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/register, roles: PUBLIC_ACCESS }
         - { path: ^/, roles: PUBLIC_ACCESS }
