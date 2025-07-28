@@ -3,6 +3,10 @@ parameters:
     login_route: '%env(LOGIN_ROUTE)%'
     homepage: '%env(HOMEPAGE)%'
     admin_panel: '%env(ADMIN_PANEL)%'
+    github_client_id: '%env(GITHUB_CLIENT_ID)%'
+    github_client_secret: '%env(GITHUB_CLIENT_SECRET)%'
+    google_client_id: '%env(GOOGLE_CLIENT_ID)%'
+    google_client_secret: '%env(GOOGLE_CLIENT_SECRET)%'
 
 services:
     _defaults:
@@ -41,3 +45,13 @@ services:
     App\Service\Product\ProductService:
         arguments:
             $keyPrefix: '%env(REDIS_PRODUCT_VIEWS_KEY_PREFIX)%'
+
+    App\Service\OAuth\Provider\GitHub\GitHubOAuthProvider:
+        arguments:
+            $clientId: '%github_client_id%'
+            $clientSecret: '%github_client_secret%'
+
+    App\Service\OAuth\Provider\Google\GoogleOAuthProvider:
+        arguments:
+            $clientId: '%google_client_id%'
+            $clientSecret: '%google_client_secret%'

@@ -15,7 +15,7 @@ abstract class AbstractTestCase extends WebTestCase
     {
         $product = new Product();
         $product->setName('Test Product')
-            ->setPrice(100);
+            ->setPrice('100');
 
         $em = static::getContainer()->get('doctrine')->getManager();
         $em->persist($product);

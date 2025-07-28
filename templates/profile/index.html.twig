@@ -48,6 +48,37 @@
                         </div>
                     </div>
 
+                    <!-- Social Account Linking -->
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-header bg-light border-0 py-3">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-link text-primary me-2"></i>Link Social Accounts
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <a href="{{ path('oauth_login_google') }}" class="btn btn-outline-danger btn-lg w-100 h-100 d-flex align-items-center justify-content-center py-3">
+                                        <div class="text-center">
+                                            <i class="fab fa-google fs-3 d-block mb-2 text-danger"></i>
+                                            <span class="fw-semibold">Google</span>
+                                            <small class="d-block text-muted">Link your Google account</small>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{{ path('oauth_login_github') }}" class="btn btn-outline-dark btn-lg w-100 h-100 d-flex align-items-center justify-content-center py-3">
+                                        <div class="text-center">
+                                            <i class="fab fa-github fs-3 d-block mb-2 text-dark"></i>
+                                            <span class="fw-semibold">GitHub</span>
+                                            <small class="d-block text-muted">Link your GitHub account</small>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Quick Actions -->
                     <div class="row g-3">
                         <div class="col-md-6">

@@ -23,13 +23,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $githubId = null;
+
+    #[ORM\Column(type: Types::STRING, length: 30, nullable: true)]
+    private ?string $googleId = null;
+
     #[ORM\Column(type: Types::STRING, length: 180, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(type: Types::JSON, nullable: false)]
     private array $roles = ['ROLE_USER'];
 
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $password = null;
 
     #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
@@ -86,14 +92,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(?string $password): static
     {
         $this->password = $password;
+        return $this;
+    }
+
+    public function getGoogleId(): ?string
+    {
+        return $this->googleId;
+    }
+
+    public function setGoogleId(string $googleId): static
+    {
+        $this->googleId = $googleId;
+        return $this;
+    }
+
+    public function getGithubId(): ?int
+    {
+        return $this->githubId;
+    }
+
+    public function setGithubId(int $githubId): static
+    {
+        $this->githubId = $githubId;
         return $this;
     }
 
@@ -109,5 +137,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getOrders(): Collection
     {
         return $this->orders;
+    }
+
+    public function createWithGoogleOAuth(string $email, string $oauthId): static
+    {
+        $this->setEmail($email);
+        $this->setGoogleId($oauthId);
+
+        return $this;
+    }
+
+    public function createWithGitHubOAuth(string $email, int $oauthId): static
+    {
+        $this->setEmail($email);
+        $this->setGithubId($oauthId);
+
+        return $this;
     }
 }
