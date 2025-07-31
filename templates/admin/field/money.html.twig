@@ -1,0 +1,5 @@
+{% if field.value %}
+    {{ (field.value.getAmount() / 100)|number_format(2, '.', ',') }} {{ field.value.getCurrency() }}
+{% else %}
+    0.00 USD
+{% endif %}

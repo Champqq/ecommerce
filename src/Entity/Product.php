@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use App\Entity\ValueObject\Money;
 use App\Repository\ProductRepository;
 use DateTimeImmutable;
 use DateTimeInterface;
@@ -12,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Money\Money as MoneyLib;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[ApiResource]
@@ -28,8 +30,8 @@ class Product
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?string $price = '0';
+    #[ORM\Embedded(class: Money::class)]
+    private Money $price;
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'products')]
     #[ORM\JoinTable(name: 'product_categories')]
@@ -52,6 +54,7 @@ class Product
 
     public function __construct()
     {
+        $this->price = new Money(0, 'USD');
         $this->categories = new ArrayCollection();
         $this->attributes = new ArrayCollection();
         $this->orderItems = new ArrayCollection();
@@ -85,15 +88,19 @@ class Product
         return $this;
     }
 
-    public function getPrice(): ?string
+    public function setPriceMoney(MoneyLib $money): void
     {
-        return $this->price;
+        $this->price = Money::fromMoney($money);
     }
 
-    public function setPrice(string $price): static
+    public function getPriceMoney(): MoneyLib
     {
-        $this->price = $price;
-        return $this;
+        return $this->price->toMoney();
+    }
+
+    public function getPrice(): Money
+    {
+        return $this->price;
     }
 
     public function getCategories(): Collection

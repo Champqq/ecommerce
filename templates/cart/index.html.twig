@@ -43,16 +43,18 @@
                                 <td>{{ item.product.name }}</td>
                                 <td>{{ item.size }}</td>
                                 <td>
-                                    <input
-                                            type="number"
-                                            value="{{ item.quantity }}"
-                                            min="1"
-                                            class="form-control form-control-sm js-cart-quantity"
-                                            data-product-id="{{ item.product.id }}"
-                                            style="width: 60px;"
-                                    />
+                                    <label>
+                                        <input
+                                                type="number"
+                                                value="{{ item.quantity }}"
+                                                min="1"
+                                                class="form-control form-control-sm js-cart-quantity"
+                                                data-product-id="{{ item.product.id }}"
+                                                style="width: 60px;"
+                                        />
+                                    </label>
                                 </td>
-                                <td>{{ item.product.price|number_format(2) }} $</td>
+                                <td>{{ item.product.priceMoney|money }} $</td>
                                 <td>
                                     <form method="post" action="{{ path('cart_remove', {id: item.product.id}) }}">
                                         <button type="submit" class="btn btn-danger btn-sm">Remove</button>
@@ -72,7 +74,7 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3">
                                 <span>Total:</span>
-                                <strong>{{ total|number_format(2) }} $</strong>
+                                <strong>{{ total|money }} $</strong>
                             </div>
 
                             <div class="d-grid gap-2">

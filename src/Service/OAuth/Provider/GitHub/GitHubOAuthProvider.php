@@ -15,9 +15,11 @@ class GitHubOAuthProvider implements GitHubOAuthProviderInterface
     public function __construct(string $clientId, string $clientSecret, RouterInterface $router)
     {
         $this->provider = new Github(
-            ['clientId'     => $clientId,
+            [
+            'clientId'     => $clientId,
             'clientSecret' => $clientSecret,
-            'redirectUri'  => $router->generate('oauth_callback_github', [], UrlGeneratorInterface::ABSOLUTE_URL),]
+            'redirectUri'  => $router->generate('oauth_callback_github', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            ]
         );
     }
 

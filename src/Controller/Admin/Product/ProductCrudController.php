@@ -37,7 +37,6 @@ class ProductCrudController extends AbstractCrudController
             IdField::new('id')->onlyOnIndex(),
             TextField::new('name'),
             TextField::new('description')->hideOnIndex(),
-            IntegerField::new('price'),
             IntegerField::new('views')->onlyOnDetail(),
             AssociationField::new('categories')->onlyOnForms(),
             ArrayField::new('categories')
@@ -70,6 +69,9 @@ class ProductCrudController extends AbstractCrudController
                 ->setUploadDir('public/uploads/products')
                 ->setUploadedFileNamePattern('[randomhash].[extension]')
                 ->setRequired(false),
+
+            TextField::new('price')
+                ->setTemplatePath('admin/field/money.html.twig'),
         ];
     }
 }

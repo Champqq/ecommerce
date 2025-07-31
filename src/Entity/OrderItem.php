@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Entity\ValueObject\Money;
 use App\Repository\OrderItemRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Money\Money as MoneyLib;
 
 #[ORM\Entity(repositoryClass: OrderItemRepository::class)]
 class OrderItem
@@ -30,11 +32,17 @@ class OrderItem
     #[ORM\Column(type: Types::STRING, length: 10)]
     private string $size;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?string $unitPrice = '0';
+    #[ORM\Embedded(class: Money::class)]
+    private Money $unitPrice;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?string $total = '0';
+    #[ORM\Embedded(class: Money::class)]
+    private Money $total;
+
+    public function __construct()
+    {
+        $this->total = new Money(0, 'USD');
+        $this->unitPrice = new Money(0, 'USD');
+    }
 
     public function getId(): ?int
     {
@@ -74,27 +82,35 @@ class OrderItem
         return $this;
     }
 
-    public function getUnitPrice(): ?string
+    public function setUnitPriceMoney(MoneyLib $money): void
+    {
+        $this->unitPrice = Money::fromMoney($money);
+        $this->recalculateTotal();
+    }
+
+    public function getUnitPriceMoney(): MoneyLib
+    {
+        return $this->unitPrice->toMoney();
+    }
+
+    public function getUnitPrice(): Money
     {
         return $this->unitPrice;
     }
 
-    public function setUnitPrice(string $unitPrice): static
+    public function setTotalMoney(MoneyLib $money): void
     {
-        $this->unitPrice = $unitPrice;
-        $this->recalculateTotal();
-        return $this;
+        $this->total = Money::fromMoney($money);
     }
 
-    public function getTotal(): ?string
+    public function getTotalMoney(): MoneyLib
+    {
+        return $this->total->toMoney();
+    }
+
+    public function getTotal(): Money
     {
         return $this->total;
-    }
-
-    public function setTotal(string $total): static
-    {
-        $this->total = $total;
-        return $this;
     }
 
     public function setSize(string $size): static
@@ -121,7 +137,9 @@ class OrderItem
 
     private function recalculateTotal(): void
     {
-        $this->total = bcmul($this->unitPrice, (string)$this->quantity, 2);
+        $price = $this->unitPrice->toMoney();
+        $total = $price->multiply($this->quantity);
+        $this->total = Money::fromMoney($total);
     }
 
     public function decreaseStock(): void

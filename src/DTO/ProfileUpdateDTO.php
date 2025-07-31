@@ -29,4 +29,3 @@ class ProfileUpdateDTO
         $this->password = $password;
     }
 }
-

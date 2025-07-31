@@ -108,10 +108,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->googleId;
     }
 
-    public function setGoogleId(string $googleId): static
+    public function setGoogleId(string $googleId): void
     {
         $this->googleId = $googleId;
-        return $this;
     }
 
     public function getGithubId(): ?int
@@ -119,10 +118,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->githubId;
     }
 
-    public function setGithubId(int $githubId): static
+    public function setGithubId(int $githubId): void
     {
         $this->githubId = $githubId;
-        return $this;
     }
 
     public function isAdmin(): bool

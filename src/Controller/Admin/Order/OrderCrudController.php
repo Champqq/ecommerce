@@ -11,7 +11,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class OrderCrudController extends AbstractCrudController
@@ -33,12 +32,15 @@ class OrderCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideWhenUpdating(),
             TextField::new('number')->hideWhenUpdating(),
-            MoneyField::new('total', 'Total')->setCurrency('USD')->setStoredAsCents(false)->setNumDecimals(2),
             TextField::new('customer_email')->hideWhenUpdating(),
             TextField::new('status'),
+
             ArrayField::new('items')
                 ->setTemplatePath('admin/field/order-items.html.twig')
-                ->onlyOnDetail()
+                ->onlyOnDetail(),
+
+            TextField::new('total')
+                ->setTemplatePath('admin/field/money.html.twig'),
         ];
     }
 }

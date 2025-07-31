@@ -6,6 +6,8 @@ namespace App\Service\Order;
 
 use App\Entity\Order;
 use App\Entity\OrderItem;
+use Money\Money;
+use Money\Currency;
 
 class OrderService implements OrderServiceInterface
 {
@@ -18,11 +20,14 @@ class OrderService implements OrderServiceInterface
 
     public function calculateTotal(Order $order): void
     {
-        $total = '0.00';
+        $total = new Money(0, new Currency('USD'));
+
         foreach ($order->getItems() as $item) {
-            $total = bcadd($total, $item->getTotal(), 2);
+            $itemTotal = $item->getTotalMoney();
+            $total = $total->add($itemTotal);
         }
-        $order->setTotal($total);
+
+        $order->setTotalMoney($total);
     }
 
     public function decreaseStock(Order $order): void

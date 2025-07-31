@@ -12,7 +12,7 @@ class OrderModifier implements OrderModifierInterface
 {
     public function __construct(
         private EntityServiceInterface $entityService,
-        private OrderServiceInterface $orderService
+        private OrderServiceInterface $orderService,
     ) {
     }
 

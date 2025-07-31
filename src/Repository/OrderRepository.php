@@ -26,7 +26,7 @@ class OrderRepository extends ServiceEntityRepository
         $orderItem->setProduct($product);
         $orderItem->updateQuantity($quantity);
         $orderItem->setSize($size);
-        $orderItem->setUnitPrice($product->getPrice());
+        $orderItem->setUnitPriceMoney($product->getPriceMoney());
 
         return $orderItem;
     }

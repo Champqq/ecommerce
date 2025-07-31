@@ -55,3 +55,6 @@ services:
         arguments:
             $clientId: '%google_client_id%'
             $clientSecret: '%google_client_secret%'
+
+    App\Twig\MoneyExtension:
+        tags: [ 'twig.extension' ]

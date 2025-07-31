@@ -15,10 +15,12 @@ class GoogleOAuthProvider implements GoogleOAuthProviderInterface
     public function __construct(string $clientId, string $clientSecret, RouterInterface $router)
     {
         $this->provider = new Google(
-            ['clientId'     => $clientId,
+            [
+            'clientId'     => $clientId,
             'clientSecret' => $clientSecret,
             'redirectUri'  => $router->generate('oauth_callback_google', [], UrlGeneratorInterface::ABSOLUTE_URL),
-            'hostedDomain' => null,]
+            'hostedDomain' => null,
+            ]
         );
     }
 
