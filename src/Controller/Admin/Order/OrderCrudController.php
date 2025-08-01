@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -39,8 +40,11 @@ class OrderCrudController extends AbstractCrudController
                 ->setTemplatePath('admin/field/order-items.html.twig')
                 ->onlyOnDetail(),
 
-            TextField::new('total')
-                ->setTemplatePath('admin/field/money.html.twig'),
+            Field::new('total')
+                ->setTemplatePath('admin/field/money.html.twig')
+                ->formatValue(function ($value) {
+                    return $value;
+                }),
         ];
     }
 }

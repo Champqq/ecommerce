@@ -47,9 +47,4 @@ class Money
     {
         return $this->currency;
     }
-
-    public function __toString(): string
-    {
-        return number_format($this->amount / 100, 2) . ' ' . strtoupper($this->currency);
-    }
 }
