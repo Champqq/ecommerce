@@ -63,12 +63,12 @@ class ProductRepository extends ServiceEntityRepository
         }
 
         if ($minPrice) {
-            $qb->andWhere('p.price >= :minPrice')
+            $qb->andWhere('p.price.amount >= :minPrice')
                 ->setParameter('minPrice', $minPrice);
         }
 
         if ($maxPrice) {
-            $qb->andWhere('p.price <= :maxPrice')
+            $qb->andWhere('p.price.amount <= :maxPrice')
                 ->setParameter('maxPrice', $maxPrice);
         }
 

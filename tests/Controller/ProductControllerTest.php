@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\Service\Product\ProductServiceInterface;
+use App\Service\Product\Views\ProductViewsServiceInterface;
 
 final class ProductControllerTest extends AbstractTestCase
 {
@@ -12,10 +12,10 @@ final class ProductControllerTest extends AbstractTestCase
     {
         $client = ProductControllerTest::createClient();
 
-        $productService = $this->createMock(ProductServiceInterface::class);
+        $productService = $this->createMock(ProductViewsServiceInterface::class);
         $productService->expects($this->once())->method('incrementViews');
 
-        ProductControllerTest::getContainer()->set(ProductServiceInterface::class, $productService);
+        ProductControllerTest::getContainer()->set(ProductViewsServiceInterface::class, $productService);
 
         $product = $this->setupProduct();
 

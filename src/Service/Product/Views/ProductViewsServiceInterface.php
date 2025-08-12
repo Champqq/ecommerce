@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Product;
+namespace App\Service\Product\Views;
 
-interface ProductServiceInterface
+interface ProductViewsServiceInterface
 {
     public function incrementViews(int $productId): void;
 }

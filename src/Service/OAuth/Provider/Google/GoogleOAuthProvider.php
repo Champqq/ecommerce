@@ -16,10 +16,10 @@ class GoogleOAuthProvider implements GoogleOAuthProviderInterface
     {
         $this->provider = new Google(
             [
-            'clientId'     => $clientId,
-            'clientSecret' => $clientSecret,
-            'redirectUri'  => $router->generate('oauth_callback_google', [], UrlGeneratorInterface::ABSOLUTE_URL),
-            'hostedDomain' => null,
+                'clientId'     => $clientId,
+                'clientSecret' => $clientSecret,
+                'redirectUri'  => $router->generate('oauth_callback_google', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'hostedDomain' => null,
             ]
         );
     }

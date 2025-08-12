@@ -70,6 +70,8 @@ Within a particular ecosystem, there may be a common way of installing things, s
 ## Usage
 Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
+## Storage options
+This project supports two file storage options for product images: local filesystem storage — stores files under upload directory, and Amazon S3 storage — uploads files to an AWS S3 bucket (or LocalStack S3-compatible service for local development). Set the environment variable STORAGE_ADAPTER in your .env file to choose storage: use 'local' for local filesystem or 's3' for Amazon S3. For S3, also configure these variables in .env: AWS_ENDPOINT=, AWS_BUCKET=, AWS_ACCESS_KEY_ID=, AWS_SECRET_ACCESS_KEY=.
 ## Support
 Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
 

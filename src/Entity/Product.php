@@ -88,7 +88,7 @@ class Product
         return $this;
     }
 
-    public function setPriceMoney(MoneyLib $money): void
+    public function setPrice(MoneyLib $money): void
     {
         $this->price = Money::fromMoney($money);
     }

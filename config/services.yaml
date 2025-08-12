@@ -7,6 +7,7 @@ parameters:
     github_client_secret: '%env(GITHUB_CLIENT_SECRET)%'
     google_client_id: '%env(GOOGLE_CLIENT_ID)%'
     google_client_secret: '%env(GOOGLE_CLIENT_SECRET)%'
+    upload_directory: '%kernel.project_dir%/public/uploads/products'
 
 services:
     _defaults:
@@ -42,7 +43,7 @@ services:
         arguments:
             $keyPrefix: '%env(REDIS_PRODUCT_VIEWS_KEY_PREFIX)%'
 
-    App\Service\Product\ProductService:
+    App\Service\Product\Views\ProductViewsService:
         arguments:
             $keyPrefix: '%env(REDIS_PRODUCT_VIEWS_KEY_PREFIX)%'
 
@@ -58,3 +59,26 @@ services:
 
     App\Twig\MoneyExtension:
         tags: [ 'twig.extension' ]
+
+    s3_client:
+        class: Aws\S3\S3Client
+        arguments:
+            - version: 'latest'
+              region: '%env(AWS_REGION)%'
+              endpoint: '%env(AWS_ENDPOINT)%'
+              use_path_style_endpoint: true
+              credentials:
+                  key: '%env(AWS_ACCESS_KEY_ID)%'
+                  secret: '%env(AWS_SECRET_ACCESS_KEY)%'
+
+    App\Service\Storage\Manager\StorageManager:
+        arguments:
+            $awsEndpoint: '%env(AWS_ENDPOINT)%'
+            $awsBucket: '%env(AWS_BUCKET)%'
+            $directory: 'upload_directory%'
+
+    App\Service\Storage\Factory\StorageFactory:
+        arguments:
+            $localStorage: '@local.storage'
+            $s3Storage: '@s3.storage'
+            $storageType: '%env(STORAGE_ADAPTER)%'

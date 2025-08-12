@@ -26,7 +26,7 @@
                             <td>
                                 <span class="badge bg-info text-dark">{{ order.status|capitalize }}</span>
                             </td>
-                            <td>{{ order.total|number_format(2, '.', ' ') }} $</td>
+                            <td>{{ order.totalMoney|money }} $</td>
                             <td>
                                 <a href="{{ path('order_show', {id: order.id}) }}" class="btn btn-sm btn-outline-primary">
                                     Details

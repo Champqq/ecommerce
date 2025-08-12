@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Product;
+namespace App\Service\Product\Views;
 
 use Redis;
+use RedisException;
 
-class ProductService implements ProductServiceInterface
+class ProductViewsService implements ProductViewsServiceInterface
 {
     public function __construct(
         private Redis $redis,
@@ -15,7 +16,7 @@ class ProductService implements ProductServiceInterface
     }
 
     /**
-     * @throws \RedisException
+     * @throws RedisException
      */
     public function incrementViews(int $productId): void
     {

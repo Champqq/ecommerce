@@ -6,11 +6,13 @@ namespace App\Service\Homepage;
 
 use App\DTO\FilterDTO;
 use App\Repository\ProductRepository;
+use App\Service\Storage\Manager\StorageManagerInterface;
 
 class HomepageService implements HomepageServiceInterface
 {
     public function __construct(
-        private ProductRepository $productRepository
+        private ProductRepository $productRepository,
+        private StorageManagerInterface $storageManager,
     ) {
     }
 
@@ -30,6 +32,11 @@ class HomepageService implements HomepageServiceInterface
         $latest = $this->productRepository->findLatest();
         $popular = $this->productRepository->findPopular();
 
-        return ['products' => $products, 'latest' => $latest, 'popular' => $popular];
+        return [
+            'products' => $products,
+            'latest' => $latest,
+            'popular' => $popular,
+            'storageManager' => $this->storageManager,
+        ];
     }
 }

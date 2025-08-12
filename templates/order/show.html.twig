@@ -13,7 +13,7 @@
             <strong>Status:</strong> <span class="badge bg-info text-dark">{{ order.status }}</span>
         </div>
         <div class="mb-3">
-            <strong>Amount:</strong> {{ order.total|number_format(2, '.', ' ') }} $
+            <strong>Amount:</strong> {{ order.totalMoney|money }} $
         </div>
 
         <h4 class="mt-4">Products:</h4>
@@ -21,7 +21,7 @@
             {% for item in order.items %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     {{ item.product.name }} (x{{ item.quantity }})
-                    <span>{{ item.total|number_format(2, '.', ' ') }} $</span>
+                    <span>{{ item.totalMoney|money }} $</span>
                 </li>
             {% else %}
                 <li class="list-group-item">Products not found.</li>

@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\Product;
 
 use App\Repository\ProductRepository;
-use App\Service\Product\ProductServiceInterface;
+use App\Service\Product\Views\ProductViewsServiceInterface;
+use App\Service\Storage\Manager\StorageManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -13,7 +14,8 @@ use Symfony\Component\Routing\Attribute\Route;
 class ProductController extends AbstractController
 {
     public function __construct(
-        private ProductServiceInterface $productService,
+        private ProductViewsServiceInterface $productService,
+        private StorageManagerInterface $storageManager,
     ) {
     }
 
@@ -24,7 +26,8 @@ class ProductController extends AbstractController
 
         return $this->render(
             'product/show.html.twig', [
-            'product' => $productRepository->find($id)
+                'product' => $productRepository->find($id),
+                'storageManager' => $this->storageManager,
             ]
         );
     }
