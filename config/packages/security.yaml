@@ -52,3 +52,5 @@ security:
         - { path: "^/product/{id}", roles: PUBLIC_ACCESS }
         - { path: ^/profile, roles: PUBLIC_ACCESS }
         - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin/export, roles: ROLE_ADMIN }
+        - { path: ^/admin/export/download, roles: ROLE_ADMIN }

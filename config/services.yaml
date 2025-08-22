@@ -8,6 +8,9 @@ parameters:
     google_client_id: '%env(GOOGLE_CLIENT_ID)%'
     google_client_secret: '%env(GOOGLE_CLIENT_SECRET)%'
     upload_directory: '%kernel.project_dir%/public/uploads/products'
+    entities: ['products', 'orders', 'users']
+    formats: ['csv', 'json', 'xml']
+    export_directory: '%kernel.project_dir%/public/exports'
 
 services:
     _defaults:
@@ -75,10 +78,27 @@ services:
         arguments:
             $awsEndpoint: '%env(AWS_ENDPOINT)%'
             $awsBucket: '%env(AWS_BUCKET)%'
-            $directory: 'upload_directory%'
+            $directory: '%upload_directory%'
 
     App\Service\Storage\Factory\StorageFactory:
         arguments:
             $localStorage: '@local.storage'
             $s3Storage: '@s3.storage'
             $storageType: '%env(STORAGE_ADAPTER)%'
+
+    App\DTO\Export\ExportConfigDTO:
+        arguments:
+            $entities: '%entities%'
+            $formats: '%formats%'
+
+    _instanceof:
+        App\Service\DataExport\Strategy\ExportStrategyInterface:
+            tags: [ 'app.export_strategy' ]
+
+    App\Service\DataExport\Export\ExportService:
+        arguments:
+            $exportStrategies: !tagged_iterator 'app.export_strategy'
+
+    App\Service\Message\MessageHandler:
+        arguments:
+            $exportDirectory: '%export_directory%'

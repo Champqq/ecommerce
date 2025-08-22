@@ -40,6 +40,9 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Categories', 'fas fa-list', Category::class);
         yield MenuItem::linkToCrud('Orders', 'fas fa-list', Order::class);
 
+        yield MenuItem::section('Data');
+        yield MenuItem::linkToRoute('Export', 'fas fa-database', 'admin_export_form');
+
         yield MenuItem::section('Test');
         yield MenuItem::linkToRoute('Homepage', 'fas fa-home', 'homepage');
     }

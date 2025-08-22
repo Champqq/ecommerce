@@ -28,5 +28,6 @@
 ###< lexik/jwt-authentication-bundle ###
 
 public/uploads
+public/exports
 
 symfony.lock
