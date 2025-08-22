@@ -21,7 +21,7 @@ final readonly class XmlExportStrategy implements ExportStrategyInterface
 
         return new Response(
             $content,
-            200,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/xml',
                 'Content-Disposition' => 'attachment; filename="' . $entityType . '.xml"',

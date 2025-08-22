@@ -21,7 +21,7 @@ final readonly class JsonExportStrategy implements ExportStrategyInterface
 
         return new Response(
             $content,
-            200,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/json',
                 'Content-Disposition' => 'attachment; filename="' . $entityType . '.json"',

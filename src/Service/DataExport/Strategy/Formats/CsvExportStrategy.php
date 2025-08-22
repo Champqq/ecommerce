@@ -38,7 +38,7 @@ final readonly class CsvExportStrategy implements ExportStrategyInterface
 
         return new Response(
             $content,
-            200,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'text/csv',
                 'Content-Disposition' => 'attachment; filename="' . $entityType . '.csv"',
