@@ -42,9 +42,11 @@ class OrderCrudController extends AbstractCrudController
 
             Field::new('total')
                 ->setTemplatePath('admin/field/money.html.twig')
-                ->formatValue(function ($value) {
-                    return $value;
-                }),
+                ->formatValue(
+                    function ($value) {
+                        return $value;
+                    }
+                ),
         ];
     }
 }

@@ -12,7 +12,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Money\Money as MoneyLib;
-use Random\RandomException;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
@@ -50,9 +49,6 @@ class Order
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $customerEmail = null;
 
-    /**
-     * @throws RandomException
-     */
     public function __construct()
     {
         $this->total = new Money(0, 'USD');
